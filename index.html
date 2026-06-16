@@ -1,518 +1,675 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gabriel Levi | Backend Developer & Solutions Architect</title>
-    
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨‍💻</text></svg>">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨‍💻</text></svg>">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
-        /* Variáveis de Cores (Dark Mode Moderno) */
+        /* Variáveis de Cores (Dark Mode Inspirado no Vídeo) */
         :root {
-            --bg-color: #0b0e14;
-            --surface-color: #151a23;
-            --primary-color: #3b82f6; /* Azul Tech */
-            --primary-hover: #2563eb;
-            --accent-color: #10b981; /* Verde Sucesso */
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #1e293b;
+            --bg-color: #111418;
+            --surface-color: #1a1d24;
+            --primary-color: #00e5ff;
+            /* Ciano Brilhante */
+            --text-main: #ffffff;
+            --text-muted: #8b949e;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --sidebar-width: 80px;
+            --font-main: 'Inter', sans-serif;
+            --bg-text-color: rgba(255, 255, 255, 0.03);
+        }
+
+        /* Light Mode */
+        body.light-mode {
+            --bg-color: #f8fafc;
+            --surface-color: #ffffff;
+            --primary-color: #00a8cc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --bg-text-color: rgba(0, 0, 0, 0.03);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
         }
 
         body {
+            font-family: var(--font-main);
             background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Navbar */
-        nav {
+        /* Container Principal */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar (Nav Vertical) */
+        .sidebar {
             position: fixed;
             top: 0;
-            width: 100%;
-            background: rgba(11, 14, 20, 0.85);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-main);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-
-        nav .logo span {
-            color: var(--primary-color);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        nav ul li a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: var(--primary-color);
-        }
-
-        /* Hero Section */
-        header {
-            min-height: 100vh;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--bg-color);
+            border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            text-align: center;
-            padding: 0 5%;
-            background: radial-gradient(circle at top, #1e293b 0%, #0b0e14 60%);
+            padding: 2rem 0;
+            z-index: 1000;
+            transition: background-color 0.3s;
         }
 
-        .hero-subtitle {
+        .sidebar-logo a {
+            writing-mode: vertical-rl;
+            transform: rotate(-180deg);
             color: var(--primary-color);
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            animation: fadeInDown 1s ease;
-        }
-
-        header h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, #f8fafc, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeInUp 1s ease;
-        }
-
-        header p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin-bottom: 2.5rem;
-            animation: fadeInUp 1.2s ease;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            animation: fadeInUp 1.4s ease;
-        }
-
-        .btn {
-            padding: 0.8rem 2rem;
-            border-radius: 8px;
-            font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: #fff;
-            border: 1px solid var(--primary-color);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        /* Seções Gerais */
-        section {
-            padding: 6rem 5%;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            font-weight: 800;
-        }
-
-        .section-title span {
-            color: var(--primary-color);
-        }
-
-        /* Sobre Mim */
-        .about-content {
-            display: flex;
-            gap: 4rem;
-            align-items: center;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .about-text p {
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-            color: var(--text-muted);
-        }
-
-        /* Habilidades */
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .skill-tag {
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s;
-        }
-
-        .skill-tag:hover {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
-            transform: translateY(-3px);
-        }
-
-        .skill-tag i {
+            font-weight: 900;
             font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        /* Projetos (Cards) */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .project-card {
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-card:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .project-status {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 0.8rem;
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-
-        .status-done { background: rgba(16, 185, 129, 0.1); color: var(--accent-color); }
-        .status-dev { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
-
-        .project-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-main);
-        }
-
-        .project-card p {
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        .tech-stack {
+        .nav-links {
             display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
+            flex-direction: column;
+            gap: 3rem;
+            list-style: none;
         }
 
-        .tech-stack span {
-            font-size: 0.75rem;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-            color: #cbd5e1;
-        }
-
-        .project-link {
-            color: var(--primary-color);
+        .nav-links li a {
+            writing-mode: vertical-rl;
+            transform: rotate(-180deg);
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .project-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Contato & Footer */
-        footer {
-            background: var(--surface-color);
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-            padding: 4rem 5% 2rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .social-links a {
-            color: var(--text-muted);
-            font-size: 2rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             transition: color 0.3s;
         }
 
-        .social-links a:hover {
+        .nav-links li a:hover,
+        .nav-links li a.active {
+            color: var(--primary-color);
+        }
+
+        .sidebar-social {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .sidebar-social a {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .sidebar-social a:hover {
             color: var(--primary-color);
             transform: scale(1.1);
         }
 
-        /* Animações Keyframes */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Main Content */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            position: relative;
         }
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 3rem;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 100;
+            transition: color 0.3s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-color);
+        }
+
+        /* Background Text (Decoração Código/Java) */
+        .bg-text {
+            position: absolute;
+            font-size: 8vw;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 900;
+            color: var(--bg-text-color);
+            writing-mode: vertical-rl;
+            z-index: -1;
+            user-select: none;
+            pointer-events: none;
+            right: 5%;
+            top: 10%;
+            letter-spacing: -2px;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 8rem 10%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Hero Section */
+        #home {
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .hero-name {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            color: var(--text-main);
+        }
+
+        .hero-title span {
+            font-weight: 300;
+        }
+
+        .hero-title .highlight {
+            color: var(--primary-color);
+            display: block;
+        }
+
+        /* Projects Section */
+        #projetos {
+            background-color: var(--bg-color);
+        }
+
+        .project-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            margin-bottom: 8rem;
+        }
+
+        .project-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .project-info {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .project-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-number::after {
+            content: "";
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .project-info h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .project-info p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .btn-view {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2.5rem;
+            background: var(--primary-color);
+            color: #111;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-view:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 229, 255, 0.2);
+        }
+
+        .project-image {
+            flex: 1;
+            background: var(--surface-color);
+            border-radius: 12px;
+            aspect-ratio: 16/9;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .project-image i {
+            font-size: 5rem;
+            color: var(--border-color);
+        }
+
+        /* About & Skills Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill-tag {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .about-image {
+            background: var(--surface-color);
+            border-radius: 50%;
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1;
+            margin: 0 auto;
+            border: 2px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            /* Isso corta qualquer sobra da imagem para fora do círculo */
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Garante que a foto preencha o círculo sem amassar */
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Faz a imagem preencher o espaço do container 16/9 perfeitamente */
+            transition: transform 0.5s ease;
+        }
+
+        .project-image:hover img {
+            transform: scale(1.05);
+            /* Efeito sutil de zoom ao passar o mouse */
+        }
+
+        /* Contact Section */
+        #contato {
+            align-items: center;
+            text-align: center;
+        }
+
+        .contact-form {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 3rem;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--border-color);
+            padding: 1rem 0;
+            color: var(--text-main);
+            font-size: 1.2rem;
+            font-family: var(--font-main);
+            transition: border-color 0.3s;
+            resize: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-bottom-color: var(--primary-color);
+        }
+
+        .contact-title {
+            font-size: 4rem;
+            font-weight: 900;
+        }
+
+        .contact-title span {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            margin-top: 5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         /* Responsividade */
-        @media (max-width: 768px) {
-            header h1 { font-size: 2.5rem; }
-            .btn-group { flex-direction: column; width: 100%; }
-            .btn { text-align: center; }
-            nav ul { display: none; /* Em um projeto real, adicionar menu hamburger */ }
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 100%;
+                height: 70px;
+                flex-direction: row;
+                padding: 0 2rem;
+                bottom: 0;
+                top: auto;
+                border-right: none;
+                border-top: 1px solid var(--border-color);
+            }
+
+            .sidebar-logo a {
+                writing-mode: horizontal-tb;
+                transform: none;
+            }
+
+            .nav-links {
+                flex-direction: row;
+                gap: 1.5rem;
+            }
+
+            .nav-links li a {
+                writing-mode: horizontal-tb;
+                transform: none;
+            }
+
+            .sidebar-social {
+                display: none;
+                /* Esconde no mobile para simplificar o menu inferior */
+            }
+
+            main {
+                margin-left: 0;
+                margin-bottom: 70px;
+            }
+
+            .bg-text {
+                font-size: 15vw;
+                right: 0;
+            }
+
+            .project-item,
+            .project-item:nth-child(even) {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .project-image {
+                width: 100%;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <nav>
-        <a href="#" class="logo">Gabriel <span>Levi</span></a>
-        <ul>
-            <li><a href="#sobre">Sobre</a></li>
-            <li><a href="#habilidades">Habilidades</a></li>
-            <li><a href="#projetos">Projetos</a></li>
-            <li><a href="#contato">Contato</a></li>
-        </ul>
-    </nav>
-
-    <header id="home">
-        
-        <span><h1 class="hero-subtitle">Desenvolvedor Back-end Java <br> & Arquiteto de Soluções</h1></span>
-        <p>Transformando gargalos operacionais em sistemas escaláveis. Especialista em construir soluções de ponta a ponta (End-to-End) que automatizam rotinas e garantem a integridade dos dados.</p>
-        <div class="btn-group">
-            <a href="#projetos" class="btn btn-primary">Ver Projetos</a>
-            <a href="https://github.com/Biellima2811" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
-        </div>
-    </header>
-
-    <section id="sobre">
-        <h2 class="section-title">Sobre <span>Mim</span></h2>
-        <div class="about-content">
-            <div class="about-text">
-                <p>Sou um profissional de tecnologia com perfil altamente analítico, focado em resolver problemas complexos. Tenho paixão por identificar ineficiências em processos empresariais e atuar proativamente no desenvolvimento de sistemas robustos e automatizados.</p>
-                <p>Com forte base na linguagem Java e Python, possuo experiência sólida na arquitetura de bancos de dados relacionais (PostgreSQL, SQL Server, Firebird) e no desenvolvimento de interfaces administrativas e APIs que impactam diretamente a produtividade das equipes técnicas.</p>
-                <p>Minha missão é construir código limpo, escalável e seguro (incorporando diretrizes LGPD e criptografia), entregando não apenas software, mas soluções reais de negócio.</p>
+    <div class="app-container">
+        <nav class="sidebar">
+            <div class="sidebar-logo">
+                <a href="#home">G. Levi</a>
             </div>
-        </div>
-    </section>
 
-    <section id="habilidades" style="background-color: var(--surface-color);">
-        <h2 class="section-title">Stack <span>Tecnológica</span></h2>
-        <div class="skills-container">
-            <div class="skill-tag"><i class="fab fa-java" style="color: #f89820;"></i> Java 21</div>
-            <div class="skill-tag"><i class="fas fa-leaf" style="color: #6db33f;"></i> Spring Boot / API Rest</div>
-            <div class="skill-tag"><i class="fab fa-python" style="color: #3776ab;"></i> Python / Flask</div>
-            <div class="skill-tag"><i class="fas fa-database" style="color: #336791;"></i> PostgreSQL / SQL Server</div>
-            <div class="skill-tag"><i class="fas fa-fire" style="color: #e53935;"></i> Firebird</div>
-            <div class="skill-tag"><i class="fas fa-desktop" style="color: #007396;"></i> JavaFX</div>
-            <div class="skill-tag"><i class="fas fa-shield-alt" style="color: #f1c40f;"></i> Segurança (jBCrypt / JWT)</div>
-            <div class="skill-tag"><i class="fab fa-git-alt"></i> Git & Versionamento</div>
-            <div class="skill-tag"><i class="fas fa-server"></i> Infraestrutura & Cloud</div>
-        </div>
-    </section>
+            <ul class="nav-links">
+                <li><a href="#projetos">Projetos</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
 
-    <section id="projetos">
-        <h2 class="section-title">Projetos <span>Em Destaque</span></h2>
-        <div class="projects-grid">
-            
-            <div class="project-card">
-                <span class="project-status status-done">Versão 1.0 Lançada</span>
-                <h3>Proton ERP</h3>
-                <p>Sistema corporativo de Cloud Management desenvolvido do zero. Substitui processos manuais por um ERP centralizado para gestão de infraestrutura de clientes, com controle de sessão rigoroso, auditoria contínua e criptografia (jBCrypt).</p>
-                <div class="tech-stack">
-                    <span>Java</span>
-                    <span>PostgreSQL</span>
-                    <span>JavaFX</span>
-                    <span>Maven</span>
+            <div class="sidebar-social">
+                <a href="https://github.com/Biellima2811" target="_blank" title="GitHub"><i
+                        class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/gabriel-levi-0a3a251b0/" target="_blank" title="LinkedIn"><i
+                        class="fab fa-linkedin-in"></i></a>
+            </div>
+        </nav>
+
+        <main>
+            <button class="theme-toggle" id="themeBtn" aria-label="Toggle Dark/Light Mode">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <section id="home">
+                <p class="hero-name">Gabriel Levi</p>
+                <h1 class="hero-title">
+                    <i class="fab fa-java" style="font-size: 6rem; color: var(--border-color);"></i>
+                    Developer<br>
+                    <span class="highlight">+ Back-End</span>
+                </h1>
+                <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin-bottom: 2rem;">
+                    Transformando gargalos operacionais em sistemas escaláveis. Especialista em construir soluções de
+                    ponta a ponta (End-to-End) garantindo a integridade dos dados e alta performance.
+                </p>
+                <a href="#projetos" class="btn-view">Ver Projetos <i class="fas fa-arrow-right"></i></a>
+            </section>
+
+            <section id="projetos">
+
+                <div class="project-item">
+                    <div class="project-info">
+                        <div class="project-number">01</div>
+                        <h3>Proton ERP</h3>
+                        <p>Sistema corporativo de Cloud Management desenvolvido do zero. Substitui processos manuais por
+                            um ERP centralizado para gestão de infraestrutura de clientes, com controle de sessão
+                            rigoroso e criptografia (jBCrypt).</p>
+                        <a href="https://github.com/Biellima2811/Proton" target="_blank" class="btn-view">View project
+                            <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="project-image">
+                        <img src="proton.png" alt="Proton ERP">
+                    </div>
                 </div>
-                <a href="https://github.com/Biellima2811/Proton" target="_blank" class="project-link">Ver Código <i class="fas fa-arrow-right"></i></a>
-            </div>
 
-            <div class="project-card">
-                <span class="project-status status-done">Concluído</span>
-                <h3>CIGS (Automação de Servidores)</h3>
-                <p>Central de Integração e Gestão de Servidores focada na eliminação de processos manuais. Implementação de agentes I.A, agendamentos inteligentes e orquestração de scripts reduzindo a intervenção humana com monitoramento desktop em tempo real.</p>
-                <div class="tech-stack">
-                    <span>Python</span>
-                    <span>Flask (API)</span>
-                    <span>Java</span>
-                    <span>PostgreSQL Server</span>
+                <div class="project-item">
+                    <div class="project-info">
+                        <div class="project-number">02</div>
+                        <h3>CIGS Automação</h3>
+                        <p>Central de Integração e Gestão de Servidores focada na eliminação de processos manuais.
+                            Implementação de agentes I.A, agendamentos inteligentes e orquestração de scripts reduzindo
+                            a intervenção humana.</p>
+                        <a href="https://github.com/Biellima2811/CIGS" target="_blank" class="btn-view">View project <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="project-image">
+                        <img src="CIGSjpg.jpg" alt="CIGS Automação">
+                    </div>
                 </div>
-                <a href="https://github.com/Biellima2811/CIGS" target="_blank" class="project-link">Ver Código <i class="fas fa-arrow-right"></i></a>
-            </div>
 
-            <div class="project-card">
-                <span class="project-status status-done">Concluído</span>
-                <h3>Loky_V4</h3>
-                <p>Plataforma de Automação para criação de Setup de maquinas em nuvem Skyone. O objetivo dessa automações é encerra qualquer falhar no processos de criação de ambiente e assim mantendo o nivel profissional de organização dos arquivos e sistema Fortes.</p>
-                <div class="tech-stack">
-                    <span>Frontend Radience - Tkinter</span>
-                    <span>Python 3.12</span>
-                    <span>Integração de Dados SQLite / NoSQL (json)</span>
+                <div class="project-item">
+                    <div class="project-info">
+                        <div class="project-number">03</div>
+                        <h3>Sys360</h3>
+                        <p>Plataforma web interativa e de alta performance desenvolvida para oferecer uma visão 360
+                            graus de processos sistêmicos. Foco em experiência do usuário e apresentação limpa de dados
+                            complexos.</p>
+                        <a href="https://github.com/Biellima2811/Sys360Estoque" target="_blank" class="btn-view">View
+                            project <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="project-image">
+                        <img src="sys360.jpg" alt="Sys360">
+                    </div>
                 </div>
-                <a href="https://github.com/Biellima2811/Sys360Estoque" target="_blank" class="project-link">Ver Código <i class="fas fa-arrow-right"></i></a>
-            </div>
+            </section>
 
-            <div class="project-card">
-                <span class="project-status status-done">Concluído</span>
-                <h3>Sys360</h3>
-                <p>Plataforma web interativa e de alta performance desenvolvida para oferecer uma visão 360 graus de processos sistêmicos. Foco em experiência do usuário e apresentação limpa de dados complexos.</p>
-                <div class="tech-stack">
-                    <span>Frontend Moderno</span>
-                    <span>UI/UX</span>
-                    <span>Integração de Dados</span>
+            <section id="sobre">
+                <div class="bg-text" style="top: 15%;">public static void main() {</div>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <h2>Seja Bem-vindo</h2>
+                        <p>Sou um profissional de tecnologia com perfil altamente analítico, focado em resolver
+                            problemas complexos. Tenho paixão por identificar ineficiências em processos empresariais e
+                            atuar proativamente no desenvolvimento de sistemas robustos e automatizados.</p>
+                        <p>Com forte base na linguagem Java e Python, possuo experiência sólida na arquitetura de bancos
+                            de dados relacionais e no desenvolvimento de interfaces administrativas e APIs que impactam
+                            diretamente a produtividade das equipes técnicas.</p>
+
+                        <div class="skills-container">
+                            <span class="skill-tag">Java 21</span>
+                            <span class="skill-tag">Spring Boot</span>
+                            <span class="skill-tag">Python / Flask</span>
+                            <span class="skill-tag">PostgreSQL</span>
+                            <span class="skill-tag">SQL Server</span>
+                            <span class="skill-tag">Cloud & AWS</span>
+                        </div>
+                    </div>
+                    <div class="about-image">
+                        <img src="minhafoto.jpg" alt="Gabriel Levi" style="width: 100%; border-radius: 50%;">
+                    </div>
                 </div>
-                <a href="https://github.com/Biellima2811/Sys360Estoque" target="_blank" class="project-link">Ver Código <i class="fas fa-arrow-right"></i></a>
-            </div>
+            </section>
 
-            <div class="project-card">
-                <span class="project-status status-done">Concluído</span>
-                <h3>CloudBackupManager</h3>
-                <p>Solução voltada para a garantia e integridade de dados. Automatiza rotinas de backup, validando os arquivos exportados e garantindo conformidade e disponibilidade dos ambientes em nuvem.</p>
-                <div class="tech-stack">
-                    <span>Shell/Scripts</span>
-                    <span>Arquitetura de Dados</span>
-                    <span>Automação</span>
+            <section id="contato">
+                <h2 class="contact-title">Say <span>hello</span></h2>
+                <p style="color: var(--text-muted); margin-top: 1rem;">Estou em busca de novas oportunidades. Se você
+                    procura um desenvolvedor que foca no negócio, me mande uma mensagem.</p>
+
+                <form class="contact-form" action="#" onsubmit="enviarEmail(event)">
+                    <div class="form-group">
+                        <label>Your Email</label>
+                        <input type="email" id="email" required placeholder="hello@company.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea id="message" rows="3" required placeholder="Como posso ajudar?"></textarea>
+                    </div>
+                    <button type="submit" class="btn-view"
+                        style="width: 100%; justify-content: center; cursor: pointer; border: none;">
+                        <i class="fas fa-paper-plane"></i> Send message
+                    </button>
+                </form>
+
+                <div class="footer-bottom">
+                    &copy; 2026 Gabriel Levi. Todos os direitos reservados.
                 </div>
-                <a href="https://github.com/Biellima2811/Cloud_Backup_Manager" target="_blank" class="project-link">Ver Código <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="project-card">
-                <span class="project-status status-done">Concluído</span>
-                <h3>SynaspERP</h3>
-                <p>Sistema de gestão empresarial projetado para centralização de dados e otimização do fluxo de trabalho diário de setores administrativos e de TI.</p>
-                <div class="tech-stack">
-                    <span>Sistemas Corporativos</span>
-                    <span>Banco Relacional</span>
-                </div>
-                <a href="https://github.com/Biellima2811/SynapseERP" target="_blank" class="project-link">Ver Código <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="project-card">
-                <span class="project-status status-dev">Em Desenvolvimento</span>
-                <h3>LogiCenter</h3>
-                <p>Novo projeto em arquitetura visando resolver desafios de logística e centralização de logs operacionais. Focado em alta escalabilidade e arquitetura limpa.</p>
-                <div class="tech-stack">
-                    <span>Java</span>
-                    <span>Spring Framework</span>
-                    <span>PostgreSQL</span>
-                </div>
-                <a href="https://github.com/Biellima2811?tab=repositories" target="_blank" class="project-link">Acompanhar Progresso <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-        </div>
-    </section>
-
-    <footer id="contato">
-        <h2 class="section-title">Vamos <span>Conversar?</span></h2>
-        <p style="color: var(--text-muted); margin-bottom: 2rem; max-width: 600px; margin-inline: auto;">
-            Estou em busca de novas oportunidades e desafios maiores. Se você procura um Desenvolvedor Back-end que constrói a arquitetura pensando no resultado do negócio, entre em contato.
-        </p>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/gabriel-levi-0a3a251b0/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="https://github.com/Biellima2811" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-            <a href="#" id="btn-email" title="Email"><i class="fas fa-envelope"></i></a>
-            <a href="https://wa.me/5585998206982" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">
-            &copy; 2026 Gabriel Levi. Todos os direitos reservados.
-        </p>
-    </footer>
+            </section>
+        </main>
+    </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Divide o e-mail em partes para enganar os robôs
+        // Toggle Dark/Light Mode
+        const themeBtn = document.getElementById('themeBtn');
+        const icon = themeBtn.querySelector('i');
+
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+
+            if (document.body.classList.contains('light-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // Simulação de envio de e-mail integrado
+        function enviarEmail(e) {
+            e.preventDefault();
             const usuario = "bielrodrigues2811";
             const dominio = "gmail.com";
-            const botaoEmail = document.getElementById("btn-email");
-            
-            // Só monta o link verdadeiro se a pessoa clicar
-            botaoEmail.addEventListener("click", function(event) {
-                event.preventDefault(); // Evita que a página pule para o topo
-                window.location.href = "mailto:" + usuario + "@" + dominio;
-            });
-        });
+            const body = document.getElementById('message').value;
+
+            // Redireciona para o cliente de email
+            window.location.href = `mailto:${usuario}@${dominio}?subject=Contato pelo Portfólio&body=${encodeURIComponent(body)}`;
+        }
     </script>
 </body>
+
 </html>
