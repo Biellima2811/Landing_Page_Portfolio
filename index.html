@@ -13,12 +13,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Variáveis de Cores (Dark Mode Inspirado no Vídeo) */
+        /* Variáveis de Cores (Dark Mode com Laranja Java Clássico) */
         :root {
             --bg-color: #111418;
             --surface-color: #1a1d24;
-            --primary-color: #00e5ff;
-            /* Ciano Brilhante */
+            --primary-color: #f89820;
+            /* Laranja Clássico do Java */
             --text-main: #ffffff;
             --text-muted: #8b949e;
             --border-color: rgba(255, 255, 255, 0.1);
@@ -31,7 +31,8 @@
         body.light-mode {
             --bg-color: #f8fafc;
             --surface-color: #ffffff;
-            --primary-color: #00a8cc;
+            --primary-color: #e76f00;
+            /* Laranja ligeiramente mais escuro para contraste no fundo claro */
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border-color: rgba(0, 0, 0, 0.1);
@@ -280,7 +281,8 @@
 
         .btn-view:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 229, 255, 0.2);
+            box-shadow: 0 10px 20px rgba(248, 152, 32, 0.2);
+            /* Sombra ajustada para o tom laranja */
         }
 
         .project-image {
@@ -337,6 +339,9 @@
             font-weight: 600;
             font-size: 0.9rem;
             color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .about-image {
@@ -351,27 +356,23 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            /* Isso corta qualquer sobra da imagem para fora do círculo */
         }
 
         .about-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Garante que a foto preencha o círculo sem amassar */
         }
 
         .project-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Faz a imagem preencher o espaço do container 16/9 perfeitamente */
             transition: transform 0.5s ease;
         }
 
         .project-image:hover img {
             transform: scale(1.05);
-            /* Efeito sutil de zoom ao passar o mouse */
         }
 
         /* Contact Section */
@@ -469,7 +470,6 @@
 
             .sidebar-social {
                 display: none;
-                /* Esconde no mobile para simplificar o menu inferior */
             }
 
             main {
@@ -529,7 +529,7 @@
             <section id="home">
                 <p class="hero-name">Gabriel Levi</p>
                 <h1 class="hero-title">
-                    <i class="fab fa-java" style="font-size: 6rem; color: var(--border-color);"></i>
+                    <i class="fab fa-java" style="font-size: 6rem; color: var(--primary-color);"></i>
                     Developer<br>
                     <span class="highlight">+ Back-End</span>
                 </h1>
@@ -601,12 +601,17 @@
                             diretamente a produtividade das equipes técnicas.</p>
 
                         <div class="skills-container">
-                            <span class="skill-tag">Java 21</span>
-                            <span class="skill-tag">Spring Boot</span>
-                            <span class="skill-tag">Python / Flask</span>
-                            <span class="skill-tag">PostgreSQL</span>
-                            <span class="skill-tag">SQL Server</span>
-                            <span class="skill-tag">Cloud & AWS</span>
+                            <span class="skill-tag"><i class="fab fa-java" style="color: #f89820;"></i> Java 21</span>
+                            <span class="skill-tag"><i class="fas fa-leaf" style="color: #6db33f;"></i> Spring
+                                Boot</span>
+                            <span class="skill-tag"><i class="fab fa-python" style="color: #3776ab;"></i> Python /
+                                Flask</span>
+                            <span class="skill-tag"><i class="fas fa-database" style="color: #336791;"></i>
+                                PostgreSQL</span>
+                            <span class="skill-tag"><i class="fas fa-server" style="color: #cc292b;"></i> SQL
+                                Server</span>
+                            <span class="skill-tag"><i class="fab fa-aws" style="color: #ff9900;"></i> Cloud &
+                                AWS</span>
                         </div>
                     </div>
                     <div class="about-image">
